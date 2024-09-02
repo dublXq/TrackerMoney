@@ -1,5 +1,6 @@
-import Categories_class
 import os
+
+import Categories_class
 
 # Общий бюджет
 TOTAL_BUDJET = 10000
@@ -41,61 +42,63 @@ def minus_transaction_method():
         general_list.append(category_oblect.transaction_dict.get(category) + "|" + str(add_summa))
 
 
-while True:
-    print("Добро пожаловать :)\n"
-          "Выберите действие:"
-          "\n1.Добавление транзакций"
-          "\n2.Мой Баланс"
-          "\n3.Отчет"
-          "\n4.Выход")
+if __name__ == "__main__":
 
-    a = input("Ввод: ")
+    while True:
+        print("Добро пожаловать :)\n"
+              "Выберите действие:"
+              "\n1.Добавление транзакций"
+              "\n2.Мой Баланс"
+              "\n3.Отчет"
+              "\n4.Выход")
 
-    match a:
-        case "1":
-            while True:
-                print("Вы хотите добавить Доход или Расход?\n1.Доход\n2.Расход ")
-                v = input("Ввод: ")
-                if v == "1":
-                    add_transaction_method()
-                    print("Доходы успешно добавлены")
-                    break
-                elif v == "2":
-                    minus_transaction_method()
-                    print("Расходы успешно добавлены")
-                    break
-                else:
-                    print("Вы ввели что-то не то. Попробуйте еще раз! ")
-        case "2":
-            print(f"Ваш текущий баланс --> {TOTAL_BUDJET}" + " UAH")
-        case "3":
-            print("Ваш отчет генерируется...")
+        a = input("Ввод: ")
 
-            # Разделяем транзакции на доходы и расходы
-            income_list = []
-            expense_list = []
+        match a:
+            case "1":
+                while True:
+                    print("Вы хотите добавить Доход или Расход?\n1.Доход\n2.Расход ")
+                    v = input("Ввод: ")
+                    if v == "1":
+                        add_transaction_method()
+                        print("Доходы успешно добавлены")
+                        break
+                    elif v == "2":
+                        minus_transaction_method()
+                        print("Расходы успешно добавлены")
+                        break
+                    else:
+                        print("Вы ввели что-то не то. Попробуйте еще раз! ")
+            case "2":
+                print(f"Ваш текущий баланс --> {TOTAL_BUDJET}" + " UAH")
+            case "3":
+                print("Ваш отчет генерируется...")
 
-            for i in general_list:
-                category, amount = i.split("|")
-                if category in category_oblect.salary_dict.values():
-                    income_list.append(f"Категория: {category}, Сумма: {amount}")
-                elif category in category_oblect.transaction_dict.values():
-                    expense_list.append(f"Категория: {category}, Сумма: -{amount}")
+                # Разделяем транзакции на доходы и расходы
+                income_list = []
+                expense_list = []
 
-            # Записываем данные в файл
-            with open("text.txt", "a", encoding="utf-8") as txt:
-                if income_list:
-                    txt.write("Доходы:\n")
-                    for income in income_list:
-                        txt.write(income + "\n")
+                for i in general_list:
+                    category, amount = i.split("|")
+                    if category in category_oblect.salary_dict.values():
+                        income_list.append(f"Категория: {category}, Сумма: {amount}")
+                    elif category in category_oblect.transaction_dict.values():
+                        expense_list.append(f"Категория: {category}, Сумма: -{amount}")
 
-                if expense_list:
-                    txt.write("\nРасходы:\n")
-                    for expense in expense_list:
-                        txt.write(expense + "\n")
+                # Записываем данные в файл
+                with open("text.txt", "a", encoding="utf-8") as txt:
+                    if income_list:
+                        txt.write("Доходы:\n")
+                        for income in income_list:
+                            txt.write(income + "\n")
 
-            print("Ваш отчет готов. Путь отчета --> " + os.path.abspath("text.txt"))
+                    if expense_list:
+                        txt.write("\nРасходы:\n")
+                        for expense in expense_list:
+                            txt.write(expense + "\n")
 
-        case "4":
-            print("Выход успешен")
-            break
+                print("Ваш отчет готов. Путь отчета --> " + os.path.abspath("text.txt"))
+
+            case "4":
+                print("Выход успешен")
+                break
